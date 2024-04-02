@@ -1,7 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Hitachi_task.CsvHandler;
 using Hitachi_task.Exceptions;
-using Hitachi_task.Islands;
 
 
 namespace Hitachi_task;
@@ -11,9 +10,11 @@ class Program
     static void Main(string[] args)
     {
         Start(out string pathToFolder, out string senderEmail, out string password, out string receiverEmail);
-        var csvDict = CsvDeserializer.Csv(pathToFolder);
+        var csvDict = CsvDeserializer.Csv(pathToFolder); //change this before commiting
         CsvReader csvReader = new CsvReader(csvDict);
-        csvReader.BestDays();
+        var bestDaysDict = csvReader.BestDays();
+        CsvWriter csvWriter = new CsvWriter(bestDaysDict);
+        csvWriter.CreateCsv();
         Console.ReadKey();
     }
 

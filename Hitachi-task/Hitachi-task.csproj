@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="CsvOutput\" />
       <Folder Include="Data\" />
     </ItemGroup>
 

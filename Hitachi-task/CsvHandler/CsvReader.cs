@@ -14,8 +14,19 @@ public class CsvReader
 
     public Dictionary<Island, Day> BestDays()
     {
-        //implement
-        return null;
+        Dictionary<Island, Day> islandDayDict = new Dictionary<Island, Day>();
+        foreach (var island in _dict.Keys)
+        {
+            islandDayDict.Add(island, BestDay(island.Name));
+        }
+        //order by the equator rank (asc)
+        islandDayDict = islandDayDict.OrderBy(x => x.Key.RankByEquator).ToDictionary(x=>x.Key, x=>x.Value);
+        /*foreach (var item in islandDayDict)
+        {
+            Console.WriteLine($"Island - {item.Key.Name} Rank - {item.Key.RankByEquator}");
+            Console.WriteLine($"Day - DayOfTheMonth-{item.Value.DayOfTheMonth} Temp-{item.Value.Temperature} - Wind-{item.Value.Wind} - Humidity-{item.Value.Humidity} - Precipitation-{item.Value.Precipitation} - Lightning-{item.Value.Lightning} - Clouds-{item.Value.Clouds}");
+        }*/
+        return islandDayDict;
     }
 
     private Day BestDay(string islandName)
@@ -66,7 +77,7 @@ public class CsvReader
             {
                 Day day = new Day()
                 {
-                    Temperature = temp[i], Wind = wind[i], Humidity = humidity[i], Precipitation = precipitation[i],
+                    DayOfTheMonth = i, Temperature = temp[i], Wind = wind[i], Humidity = humidity[i], Precipitation = precipitation[i],
                     Lightning = lightning[i], Clouds = clouds[i]
                 };
                 days.Add(day);
@@ -76,12 +87,12 @@ public class CsvReader
         days = days.OrderByDescending(x => x.Wind).ThenByDescending(x => x.Humidity).ToList();
         /*foreach (var day in days)
         {
-            Console.WriteLine($"Temp-{day.Temperature} - Wind-{day.Wind} - Humidity-{day.Humidity} - Precipitation-{day.Precipitation} - Lightning-{day.Lightning} - Clouds-{day.Clouds}");
+            Console.WriteLine($"DayOfTheMonth-{bestDay.DayOfTheMonth} Temp-{day.Temperature} - Wind-{day.Wind} - Humidity-{day.Humidity} - Precipitation-{day.Precipitation} - Lightning-{day.Lightning} - Clouds-{day.Clouds}");
         }*/
 
         Day bestDay = days.LastOrDefault();
         /*Console.WriteLine("Best: ");
-        Console.WriteLine($"Temp-{bestDay.Temperature} - Wind-{bestDay.Wind} - Humidity-{bestDay.Humidity} - Precipitation-{bestDay.Precipitation} - Lightning-{bestDay.Lightning} - Clouds-{bestDay.Clouds}");*/
+        Console.WriteLine($"DayOfTheMonth-{bestDay.DayOfTheMonth} Temp-{bestDay.Temperature} - Wind-{bestDay.Wind} - Humidity-{bestDay.Humidity} - Precipitation-{bestDay.Precipitation} - Lightning-{bestDay.Lightning} - Clouds-{bestDay.Clouds}");*/
         return bestDay;
     }
 }

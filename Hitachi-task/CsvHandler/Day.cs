@@ -4,6 +4,7 @@ namespace Hitachi_task.CsvHandler;
 
 public class Day
 {
+    public int DayOfTheMonth { get; set; }
     public int Temperature { get; set; }
     public int Wind { get; set; }
     public int Humidity { get; set; }

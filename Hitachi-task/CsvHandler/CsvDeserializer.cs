@@ -13,7 +13,7 @@ public static class CsvDeserializer
                 return 1;
             if (x.EndsWith("Data-Tanegashima.csv"))
                 return 2;
-            if (x.EndsWith("Data-Cape.csv"))
+            if (x.EndsWith("Data-Cape Canaveral.csv"))
                 return 3;
             if (x.EndsWith("Data-Mahia.csv"))
                 return 4;
