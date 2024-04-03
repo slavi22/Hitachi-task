@@ -11,15 +11,18 @@ public class CsvWriter
         _dict = dict;
     }
 
-    public void CreateCsv()
+    public string CreateCsv()
     {
         string path = "../../../CsvOutput/LaunchAnalysisReport.csv";
         using (StreamWriter writer = new StreamWriter(path))
         {
+            writer.WriteLine("Spaceport;Best day");
             foreach (var kvp in _dict)
             {
                 writer.WriteLine($"{kvp.Key.Name};{kvp.Value.DayOfTheMonth};");
             }
         }
+
+        return path;
     }
 }

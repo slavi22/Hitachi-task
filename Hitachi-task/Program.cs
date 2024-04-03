@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Hitachi_task.CsvHandler;
+using Hitachi_task.EmailSender;
 using Hitachi_task.Exceptions;
-
 
 namespace Hitachi_task;
 
@@ -14,8 +14,11 @@ class Program
         CsvReader csvReader = new CsvReader(csvDict);
         var bestDaysDict = csvReader.BestDays();
         CsvWriter csvWriter = new CsvWriter(bestDaysDict);
-        csvWriter.CreateCsv();
-        Console.ReadKey();
+        var createdCsvPath = csvWriter.CreateCsv();
+        Sender emailSender = new Sender(bestDaysDict);
+        emailSender.SendEmail(senderEmail, password, receiverEmail, createdCsvPath);
+        Console.WriteLine("The app has finished execution. Press any key to exit . . .");
+        Console.ReadKey(true);
     }
 
     static void Start(out string pathToFolder, out string senderEmail, out string password, out string receiverEmail)
@@ -38,16 +41,20 @@ class Program
                         string fileExtension = Path.GetExtension(filename);
                         if (fileExtension != ".csv")
                         {
-                            throw new CustomException("There is a file in the folder which is not of type csv! Please delete it and relaunch the application");
+                            throw new CustomException("There is a file in the folder which is not of type \"csv\"! Please delete it and relaunch the application");
                         }
                     }
                     break;
+                }
+                else
+                {
+                    throw new CustomException("Invalid path! Please provide a valid path the the directory which contains the csvs");
                 }
             }
             catch (CustomException e)
             {
                 Console.WriteLine(e.Message);
-                if (e.Message == "There is a file in the folder which is not of type csv! Please delete it and relaunch the application")
+                if (e.Message == "There is a file in the folder which is not of type \"csv\"! Please delete it and relaunch the application")
                 {
                     Console.WriteLine("Press any key to exit the app . . .");
                     Console.ReadKey(true);
