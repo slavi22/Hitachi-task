@@ -3,7 +3,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using Hitachi_task.CsvHandler;
 using Hitachi_task.Exceptions;
-using Hitachi_task.Islands;
+using Hitachi_task.Models;
 
 namespace Hitachi_task.EmailSender;
 
