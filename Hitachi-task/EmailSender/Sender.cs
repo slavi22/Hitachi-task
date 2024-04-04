@@ -10,10 +10,12 @@ namespace Hitachi_task.EmailSender;
 public class Sender
 {
     private readonly Dictionary<Island, Day> _bestDaysDict;
+    private readonly bool _isEnglish;
 
-    public Sender(Dictionary<Island, Day> bestDaysDict)
+    public Sender(Dictionary<Island, Day> bestDaysDict, bool isEnglish)
     {
         _bestDaysDict = bestDaysDict;
+        _isEnglish = isEnglish;
     }
 
     public void SendEmail(string senderEmail, string senderEmailPassword, string receiverEmail, string createdCsvPath)
@@ -45,9 +47,9 @@ public class Sender
                                     <img src=""https://www.hitachi-solutions.bg/wp-content/uploads/2023/03/SPACE-Icon-with-HS-logo-e1678100201133-1024x1024.png""alt=""hitachi space image""id=""email-image"">
                                 </a>
                                 <div id=""heading"">
-                                    <h1>Hitachi - SPACE Shuttle Launch Report</h1>
-                                    <h2>The best combination is: ""{bestCombinationIsland}"" - {bestCombinationDay}{ordinalNumberSpelling} of July</h2>
-                                    <h3>A csv report can be found in the attached file</h3>
+                                    <h1>{(_isEnglish ? "Hitachi - SPACE Shuttle Launch Report" : "Hitachi - SPACE Shuttle Startbericht")}</h1>
+                                    <h2>{(_isEnglish ? $"The best combination is: \"{bestCombinationIsland}\" - {bestCombinationDay}{ordinalNumberSpelling} of July" : $"Die beste Kombination ist: \"{bestCombinationIsland}\" - {bestCombinationDay} Juli")}</h2>
+                                    <h3>{(_isEnglish ? "A csv report can be found in the attached file" : "Einen csv-Bericht finden Sie in der beigefügten Datei")}</h3>
                                 </div>
                             </div>
                         </body>";
@@ -65,14 +67,17 @@ public class Sender
             smtpClient.EnableSsl = true;
             try
             {
-                Console.WriteLine("Sending the email . . .");
+                Console.WriteLine(_isEnglish ? "Sending the email . . ." : "Versenden der E-Mail . . .");
                 smtpClient.Send(message);
             }
             catch (SmtpException)
             {
                 try
                 {
-                    throw new CustomException("The provided password is incorrect for the sender email! Please enter the correct password");
+                    string exceptionMessage = _isEnglish
+                        ? "The provided password is incorrect for the sender email! Please enter the correct password"
+                        : "Das angegebene Passwort ist für die Absender-E-Mail falsch! Bitte geben Sie das richtige Passwort ein";
+                    throw new CustomException(exceptionMessage);
                 }
                 catch (CustomException e)
                 {
@@ -87,7 +92,10 @@ public class Sender
                             if (string.IsNullOrEmpty(senderEmailPassword))
                             {
                                 senderEmailPassword = "";
-                                throw new CustomException("The password cannot be empty! Please enter a valid password");
+                                string exceptionMessage = _isEnglish
+                                    ? "The password cannot be empty! Please enter a valid password"
+                                    : "Das Passwort kann nicht leer sein! Bitte geben Sie ein gültiges Passwort ein";
+                                throw new CustomException(exceptionMessage);
                             }
                             else
                             {
@@ -111,6 +119,7 @@ public class Sender
                             }
                         }
                     }
+
                     Console.WriteLine();
                     SendEmail(senderEmail, senderEmailPassword, receiverEmail, createdCsvPath);
                     return;
@@ -118,6 +127,6 @@ public class Sender
             }
         }
 
-        Console.WriteLine($"Email has been successfully sent to \"{receiverEmail}\"!");
+        Console.WriteLine(_isEnglish ? $"Email has been successfully sent to \"{receiverEmail}\"!" : $"Die E-Mail wurde erfolgreich an \"{receiverEmail}\" gesendet!");
     }
 }

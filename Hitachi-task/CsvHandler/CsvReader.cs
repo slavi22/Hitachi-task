@@ -69,7 +69,7 @@ public class CsvReader
             }
         }
 
-        List<Day> days = new List<Day>().ToList();
+        List<Day> days = new List<Day>();
         for (int i = 0; i < 15; i++)
         {
             if ((temp[i] >= 1 && temp[i] <= 32) && wind[i] <= 11 && humidity[i] < 55 && precipitation[i] == 0 &&
