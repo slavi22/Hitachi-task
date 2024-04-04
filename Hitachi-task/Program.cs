@@ -8,10 +8,16 @@ namespace Hitachi_task;
 class Program
 {
     private static bool _isEnglish = true;
+    private static bool _firstTimeLanguageChosen = false;
 
     static void Main(string[] args)
     {
-        ChangeLanguage();
+        if (_firstTimeLanguageChosen == false)
+        {
+            _firstTimeLanguageChosen = true;
+            ChangeLanguage();
+        }
+
         Start(out string pathToFolder, out string senderEmail, out string password, out string receiverEmail);
         var csvDict = CsvDeserializer.Csv(pathToFolder); //change this before commiting
         CsvReader csvReader = new CsvReader(csvDict);
@@ -30,15 +36,19 @@ class Program
     {
         ConsoleKeyInfo key;
         Console.WriteLine(_isEnglish
-            ? "Please choose the application UI language.\nPress \"e\" for English and \"g\" for German \n(note you can always change the language by pressing \"ctrl + l\"), doing so will make you lose your current information!"
-            : "Bitte wählen Sie die Sprache der Benutzeroberfläche der Anwendung. \n Drücken Sie \"e\" für Englisch und \"g\" für Deutsch \n (beachten Sie, dass Sie die Sprache jederzeit durch Drücken von \"ctrl + l\" ändern können), sonst gehen Ihre aktuellen Informationen verloren!");
+            ? "Please choose the application UI language.\nPress \"e\" for English and \"g\" for German.\n(note you can always change the language by pressing \"ctrl + l\"), doing so will make you lose your current information!"
+            : "Bitte wählen Sie die Sprache der Benutzeroberfläche der Anwendung.\nDrücken Sie \"e\" für Englisch und \"g\" für Deutsch\n(beachten Sie, dass Sie die Sprache jederzeit durch Drücken von \"ctrl + l\" ändern können), sonst gehen Ihre aktuellen Informationen verloren!");
         while (true)
         {
-            key = Console.ReadKey();
+            key = Console.ReadKey(true);
             if (key.Key == ConsoleKey.E)
             {
                 _isEnglish = true;
                 break;
+            }
+            else if ((key.Modifiers & ConsoleModifiers.Control) != 0 && key.Key == ConsoleKey.L)
+            {
+                continue;
             }
             else if (key.Key == ConsoleKey.G)
             {
@@ -47,7 +57,9 @@ class Program
             }
             else
             {
-                Console.WriteLine("\nInvalid symbol! Please type \"e\" for English or \"g\" for German");
+                Console.WriteLine(_isEnglish
+                    ? "\nInvalid symbol! Please type \"e\" for English or \"g\" for German"
+                    : "\nUngültiges Symbol! Bitte geben Sie \"e\" für Englisch oder \"g\" für Deutsch ein.");
             }
         }
 
