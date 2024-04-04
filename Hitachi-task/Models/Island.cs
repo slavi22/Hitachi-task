@@ -1,4 +1,4 @@
-namespace Hitachi_task.Islands;
+namespace Hitachi_task.Models;
 
 public class Island
 {
