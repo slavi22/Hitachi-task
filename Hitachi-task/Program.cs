@@ -19,7 +19,7 @@ class Program
         }
 
         Start(out string pathToFolder, out string senderEmail, out string password, out string receiverEmail);
-        var csvDict = CsvDeserializer.Csv(pathToFolder); //change this before commiting
+        var csvDict = CsvDeserializer.Csv(pathToFolder);
         CsvReader csvReader = new CsvReader(csvDict);
         var bestDaysDict = csvReader.BestDays();
         CsvWriter csvWriter = new CsvWriter(bestDaysDict, _isEnglish);
@@ -139,7 +139,7 @@ class Program
                 {
                     ChangeLanguage();
                     Console.Clear();
-                    Main(null); //fix this as whenever i choose a new language it asks me to enter a language again
+                    Main(null);
                     return "";
                 }
                 else if (key.Key != ConsoleKey.Backspace)
@@ -218,7 +218,7 @@ class Program
                 {
                     ChangeLanguage();
                     Console.Clear();
-                    Main(null); //fix this as whenever i choose a new language it asks me to enter a language again
+                    Main(null);
                     return "";
                 }
                 else if (key.Key != ConsoleKey.Backspace)
@@ -278,7 +278,7 @@ class Program
                 {
                     ChangeLanguage();
                     Console.Clear();
-                    Main(null); //fix this as whenever i choose a new language it asks me to enter a language again
+                    Main(null);
                     return "";
                 }
                 else if (key.Key != ConsoleKey.Backspace)
@@ -345,7 +345,7 @@ class Program
                 {
                     ChangeLanguage();
                     Console.Clear();
-                    Main(null); //fix this as whenever i choose a new language it asks me to enter a language again
+                    Main(null);
                     return "";
                 }
                 else if (key.Key != ConsoleKey.Backspace)

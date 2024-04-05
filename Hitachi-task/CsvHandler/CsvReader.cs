@@ -19,8 +19,9 @@ public class CsvReader
         {
             islandDayDict.Add(island, BestDay(island.Name));
         }
+
         //order by the equator rank (asc)
-        islandDayDict = islandDayDict.OrderBy(x => x.Key.RankByEquator).ToDictionary(x=>x.Key, x=>x.Value);
+        islandDayDict = islandDayDict.OrderBy(x => x.Key.RankByEquator).ToDictionary(x => x.Key, x => x.Value);
         /*foreach (var item in islandDayDict)
         {
             Console.WriteLine($"Island - {item.Key.Name} Rank - {item.Key.RankByEquator}");
@@ -77,7 +78,8 @@ public class CsvReader
             {
                 Day day = new Day()
                 {
-                    DayOfTheMonth = i, Temperature = temp[i], Wind = wind[i], Humidity = humidity[i], Precipitation = precipitation[i],
+                    DayOfTheMonth = i, Temperature = temp[i], Wind = wind[i], Humidity = humidity[i],
+                    Precipitation = precipitation[i],
                     Lightning = lightning[i], Clouds = clouds[i]
                 };
                 days.Add(day);
