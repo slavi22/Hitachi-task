@@ -89,7 +89,7 @@ public class CsvReader
         days = days.OrderByDescending(x => x.Wind).ThenByDescending(x => x.Humidity).ToList();
         /*foreach (var day in days)
         {
-            Console.WriteLine($"DayOfTheMonth-{bestDay.DayOfTheMonth} Temp-{day.Temperature} - Wind-{day.Wind} - Humidity-{day.Humidity} - Precipitation-{day.Precipitation} - Lightning-{day.Lightning} - Clouds-{day.Clouds}");
+            Console.WriteLine($"Island - {islandName} DayOfTheMonth-{day.DayOfTheMonth} Temp-{day.Temperature} - Wind-{day.Wind} - Humidity-{day.Humidity} - Precipitation-{day.Precipitation} - Lightning-{day.Lightning} - Clouds-{day.Clouds}");
         }*/
 
         Day bestDay = days.LastOrDefault();
