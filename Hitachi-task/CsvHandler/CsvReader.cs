@@ -33,39 +33,39 @@ public class CsvReader
     private Day BestDay(string islandName)
     {
         Island island = _dict.FirstOrDefault(x => x.Key.Name == islandName).Key;
-        int[] temp = new int[16];
-        int[] wind = new int[16];
-        int[] humidity = new int[16];
-        int[] precipitation = new int[16];
-        bool[] lightning = new bool[16];
-        CloudsEnum[] clouds = new CloudsEnum[16];
+        int[] temp = new int[15];
+        int[] wind = new int[15];
+        int[] humidity = new int[15];
+        int[] precipitation = new int[15];
+        bool[] lightning = new bool[15];
+        CloudsEnum[] clouds = new CloudsEnum[15];
         for (int i = 1; i < _dict[island].Count; i++)
         {
             for (int j = 1; j < _dict[island][i].Length; j++)
             {
                 if (i == 1) //day/parameter
                 {
-                    temp[j] = int.Parse(_dict[island][i][j]);
+                    temp[j - 1] = int.Parse(_dict[island][i][j]);
                 }
                 else if (i == 2) //wind
                 {
-                    wind[j] = int.Parse(_dict[island][i][j]);
+                    wind[j - 1] = int.Parse(_dict[island][i][j]);
                 }
                 else if (i == 3) //humidity
                 {
-                    humidity[j] = int.Parse(_dict[island][i][j]);
+                    humidity[j - 1] = int.Parse(_dict[island][i][j]);
                 }
                 else if (i == 4) //precipitation
                 {
-                    precipitation[j] = int.Parse(_dict[island][i][j]);
+                    precipitation[j - 1] = int.Parse(_dict[island][i][j]);
                 }
                 else if (i == 5) //lightning
                 {
-                    lightning[j] = true ? _dict[island][i][j] == "Yes" : _dict[island][i][j] == "No";
+                    lightning[j - 1] = true ? _dict[island][i][j] == "Yes" : _dict[island][i][j] == "No";
                 }
                 else if (i == 6) //clouds
                 {
-                    clouds[j] = (CloudsEnum)Enum.Parse(typeof(CloudsEnum), _dict[island][i][j]);
+                    clouds[j - 1] = (CloudsEnum)Enum.Parse(typeof(CloudsEnum), _dict[island][i][j]);
                 }
             }
         }
@@ -78,7 +78,7 @@ public class CsvReader
             {
                 Day day = new Day()
                 {
-                    DayOfTheMonth = i, Temperature = temp[i], Wind = wind[i], Humidity = humidity[i],
+                    DayOfTheMonth = i+1, Temperature = temp[i], Wind = wind[i], Humidity = humidity[i],
                     Precipitation = precipitation[i],
                     Lightning = lightning[i], Clouds = clouds[i]
                 };
