@@ -10,6 +10,14 @@ public class CsvReader
     public CsvReader(Dictionary<Island, List<string[]>> dict)
     {
         _dict = dict;
+        /*foreach (var item in _dict)
+        {
+            Console.WriteLine($"{item.Key.Name} -");
+            foreach (var item2 in item.Value)
+            {
+                Console.WriteLine($"{string.Join(", ", item2)}");
+            }
+        }*/
     }
 
     public Dictionary<Island, Day> BestDays()
@@ -19,7 +27,6 @@ public class CsvReader
         {
             islandDayDict.Add(island, BestDay(island.Name));
         }
-
         //order by the equator rank (asc)
         islandDayDict = islandDayDict.OrderBy(x => x.Key.RankByEquator).ToDictionary(x => x.Key, x => x.Value);
         /*foreach (var item in islandDayDict)
@@ -39,33 +46,33 @@ public class CsvReader
         int[] precipitation = new int[15];
         bool[] lightning = new bool[15];
         CloudsEnum[] clouds = new CloudsEnum[15];
-        for (int i = 1; i < _dict[island].Count; i++)
+        for (int i = 0; i < _dict[island].Count; i++)
         {
-            for (int j = 1; j < _dict[island][i].Length; j++)
+            for (int j = 0; j < _dict[island][i].Length; j++)
             {
-                if (i == 1) //day/parameter
+                if (i == 0) //day/parameter
                 {
-                    temp[j - 1] = int.Parse(_dict[island][i][j]);
+                    temp[j] = int.Parse(_dict[island][i][j]);
                 }
-                else if (i == 2) //wind
+                else if (i == 1) //wind
                 {
-                    wind[j - 1] = int.Parse(_dict[island][i][j]);
+                    wind[j] = int.Parse(_dict[island][i][j]);
                 }
-                else if (i == 3) //humidity
+                else if (i == 2) //humidity
                 {
-                    humidity[j - 1] = int.Parse(_dict[island][i][j]);
+                    humidity[j] = int.Parse(_dict[island][i][j]);
                 }
-                else if (i == 4) //precipitation
+                else if (i == 3) //precipitation
                 {
-                    precipitation[j - 1] = int.Parse(_dict[island][i][j]);
+                    precipitation[j] = int.Parse(_dict[island][i][j]);
                 }
-                else if (i == 5) //lightning
+                else if (i == 4) //lightning
                 {
-                    lightning[j - 1] = true ? _dict[island][i][j] == "Yes" : _dict[island][i][j] == "No";
+                    lightning[j] = true ? _dict[island][i][j] == "Yes" : _dict[island][i][j] == "No";
                 }
-                else if (i == 6) //clouds
+                else if (i == 5) //clouds
                 {
-                    clouds[j - 1] = (CloudsEnum)Enum.Parse(typeof(CloudsEnum), _dict[island][i][j]);
+                    clouds[j] = (CloudsEnum)Enum.Parse(typeof(CloudsEnum), _dict[island][i][j]);
                 }
             }
         }

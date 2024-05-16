@@ -33,8 +33,24 @@ public static class CsvDeserializer
                 parser.SetDelimiters(";");
                 while (!parser.EndOfData)
                 {
-                    dict[island].Add(parser.ReadFields());
+                    if (parser.LineNumber < 2)
+                    {
+                        parser.ReadLine();
+                        continue;
+                    }
+                    dict[island].Add(parser.ReadFields().Skip(1).ToArray());
+                    //dict[island].Add(parser.ReadFields().ToArray());
                 }
+
+                /*foreach (var item in dict)
+                {
+                    Console.WriteLine($"{item.Key.Name} -");
+                    foreach (var item2 in item.Value)
+                    {
+                        Console.WriteLine($"{string.Join(", ", item2)}");
+                    }
+                    break;
+                }*/
             }
         }
 
