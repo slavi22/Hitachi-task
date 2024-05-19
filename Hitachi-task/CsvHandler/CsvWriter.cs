@@ -18,10 +18,10 @@ public class CsvWriter
         string path = "../../../CsvOutput/LaunchAnalysisReport.csv";
         using (StreamWriter writer = new StreamWriter(path))
         {
-            writer.WriteLine(_isEnglish ? "Spaceport;Best day" : "Weltraumbahnhof;Bester Tag");
+            writer.WriteLine(_isEnglish ? "Spaceport,Best day" : "Weltraumbahnhof,Bester Tag");
             foreach (var kvp in _dict)
             {
-                writer.WriteLine($"{kvp.Key.Name};{kvp.Value.DayOfTheMonth};");
+                writer.WriteLine($"{kvp.Key.Name},{kvp.Value.DayOfTheMonth},");
             }
         }
 
