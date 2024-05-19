@@ -30,7 +30,7 @@ public static class CsvDeserializer
             dict.Add(island, new List<string[]>());
             using (TextFieldParser parser = new TextFieldParser(filePath))
             {
-                parser.SetDelimiters(";");
+                parser.SetDelimiters(",");
                 while (!parser.EndOfData)
                 {
                     if (parser.LineNumber < 2)
